@@ -1,0 +1,29 @@
+{
+  "name": "react-native-websocket-impl",
+  "version": "1.0.0",
+  "description": "A react-native implementation of WebSocket.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react-native",
+    "android",
+    "ios",
+    "websocket"
+  ],
+  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Iskander508/react-native-websocket-impl.git"
+  },
+  "peerDependencies": {
+    "react-native": ">=0.13"
+  },
+  "dependencies": {},
+  "bugs": {
+    "url": "https://github.com/Iskander508/react-native-websocket-impl/issues"
+  },
+  "homepage": "https://github.com/Iskander508/react-native-websocket-impl#readme",
+  "license": "ISC"
+}
