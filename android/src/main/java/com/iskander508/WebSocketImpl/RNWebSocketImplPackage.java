@@ -1,4 +1,4 @@
-package com.iskander508;
+package com.iskander508.WebSocketImpl;
 
 import java.util.Arrays;
 import java.util.Collections;

@@ -20,7 +20,9 @@
   "peerDependencies": {
     "react-native": ">=0.13"
   },
-  "dependencies": {},
+  "dependencies": {
+    "eventemitter3": "3.1.0"
+  },
   "bugs": {
     "url": "https://github.com/Iskander508/react-native-websocket-impl/issues"
   },
