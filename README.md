@@ -37,13 +37,13 @@
 
 ## Usage
 ```javascript
-import WebSocketManager from 'react-native-websocket-impl';
+import openConnection from 'react-native-websocket-impl';
 
-WebSocketManager.openConnection(url)
-.then(() => {
-	console.log('Connected successfully!')
-}, () => {
-	console.log('Connection failed!')
-})
+openConnection(url, headers)
+  .then(socket => {
+	  console.log('Socket created successfully!')
+  }, err => {
+	  console.log('Socket creation failed!')
+  });
 ```
   

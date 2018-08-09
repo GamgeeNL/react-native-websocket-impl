@@ -1,4 +1,4 @@
-import {NativeModules, DeviceEventEmitter} from 'react-native';
+import {NativeModules, DeviceEventEmitter, NativeEventEmitter, Platform} from 'react-native';
 import EventEmitter from 'eventemitter3';
 
 const {WebSocketImpl} = NativeModules;
@@ -12,6 +12,7 @@ const ReadyState = {
 
 // currently existing sockets, index => socket
 const Sockets = {};
+let iOSCounter = 1;
 
 const onOpen = socket => {
   socket.readyState = ReadyState.OPEN;
@@ -26,15 +27,28 @@ const onClose = (socket, code, reason) => {
 };
 const onError = (socket, message) => socket.emitter.emit('error', message);
 
+const Emitter = Platform.select({
+  android: DeviceEventEmitter,
+  ios: new NativeEventEmitter(WebSocketImpl)
+});
 const listener = handler => evt => {
   if (Sockets[evt.index]) {
     handler(Sockets[evt.index], evt);
   }
 };
-DeviceEventEmitter.addListener('ws-impl-open', listener(onOpen));
-DeviceEventEmitter.addListener('ws-impl-message', listener((socket, {message}) => onMessage(socket, message)));
-DeviceEventEmitter.addListener('ws-impl-close', listener((socket, {code, reason}) => onClose(socket, code, reason)));
-DeviceEventEmitter.addListener('ws-impl-error', listener((socket, {message}) => onError(socket, message)));
+Emitter.addListener('ws-impl-open', listener(onOpen));
+Emitter.addListener(
+  'ws-impl-message',
+  listener((socket, {message}) => onMessage(socket, message))
+);
+Emitter.addListener(
+  'ws-impl-close',
+  listener((socket, {code, reason}) => onClose(socket, code, reason))
+);
+Emitter.addListener(
+  'ws-impl-error',
+  listener((socket, {message}) => onError(socket, message))
+);
 
 export default function openConnection(url, headers = {}) {
   const emitter = new EventEmitter();
@@ -57,15 +71,28 @@ export default function openConnection(url, headers = {}) {
     }
   };
 
-  return new Promise((resolve, reject) =>
-    WebSocketImpl.open(
-      url, headers,
-      index => {
-        socket.index = index;
-        Sockets[index] = socket;
-        resolve(socket);
-      },
-      message => reject(new Error(message))
-    )
-  );
+  if (Platform.OS === 'android') {
+    return new Promise((resolve, reject) =>
+      WebSocketImpl.open(
+        url,
+        headers,
+        index => {
+          socket.index = index;
+          Sockets[index] = socket;
+          resolve(socket);
+        },
+        message => reject(new Error(message))
+      )
+    );
+  } else {
+    socket.index = iOSCounter++;
+    WebSocketImpl.connect(
+      url,
+      null,
+      {headers},
+      socket.index
+    );
+    Sockets[socket.index] = socket;
+    return Promise.resolve(socket);
+  }
 }
