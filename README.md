@@ -47,7 +47,7 @@ openConnection(url, headers)
     socket.ping() // send WS PING frame
     socket.pong() // send WS PONG frame (unsolicited)
   }, err => {
-	  console.log('Socket creation failed!')
+    console.log('Socket creation failed!')
   });
 ```
   
