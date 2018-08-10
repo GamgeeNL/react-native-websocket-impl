@@ -43,9 +43,16 @@ import openConnection from 'react-native-websocket-impl';
 openConnection(url, headers)
   .then(socket => {
     console.log('Socket created successfully!')
+    
+    socket.on('open', () => console.log('OPEN'))
+    socket.on('message', (message) => console.log('MSG: ' + message))
+    socket.on('close', (code, reason) => console.log('CLOSE'))
+    socket.on('error', (message) => console.log('ERROR'))
+    
     socket.send('message')
     socket.ping() // send WS PING frame
     socket.pong() // send WS PONG frame (unsolicited)
+    socket.close()
   }, err => {
     console.log('Socket creation failed!')
   });
