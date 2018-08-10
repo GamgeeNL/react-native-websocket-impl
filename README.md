@@ -1,5 +1,6 @@
 
 # react-native-websocket-impl
+Enables WebSocket ping and pong messages to be sent from js code.
 
 ## Getting started
 
@@ -41,7 +42,10 @@ import openConnection from 'react-native-websocket-impl';
 
 openConnection(url, headers)
   .then(socket => {
-	  console.log('Socket created successfully!')
+    console.log('Socket created successfully!')
+    socket.send('message')
+    socket.ping() // send WS PING frame
+    socket.pong() // send WS PONG frame (unsolicited)
   }, err => {
 	  console.log('Socket creation failed!')
   });
