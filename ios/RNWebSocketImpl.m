@@ -191,7 +191,7 @@ RCT_EXPORT_METHOD(close:(nonnull NSNumber *)socketID withCode:(NSInteger)code re
 
 @implementation RCTBridge (RCTWSImplWebSocketModule)
 
-- (RCTWSImplWebSocketModule *)webSocketModule
+- (RCTWSImplWebSocketModule *)webSocketImplModule
 {
   return [self moduleForClass:[RCTWSImplWebSocketModule class]];
 }

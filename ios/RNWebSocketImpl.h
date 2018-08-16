@@ -28,7 +28,7 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface RCTBridge (RCTWSImplWebSocketModule)
 
-- (RCTWSImplWebSocketModule *)webSocketModule;
+- (RCTWSImplWebSocketModule *)webSocketImplModule;
 
 @end
 
