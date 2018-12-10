@@ -1,6 +1,6 @@
 {
   "name": "react-native-websocket-impl",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A react-native implementation of WebSocket.",
   "main": "index.js",
   "scripts": {
